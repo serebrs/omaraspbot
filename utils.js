@@ -55,7 +55,7 @@ exports.searchSchedule = async function searchSchedule(obuchPrep, obuchPrepText,
             else sendMessageText = `<b>Расписание на ${dayText}</b>\n\nВы ввели: [<i>${obuchPrepText}</i>]. По запросу не найден ни один преподаватель. Отправьте мне более точный запрос.`;
             break;
         default:
-            return 'Ошибка.';
+            return 'Ошибка. Удалите и перезапустите бот';
             break;
     }
     return sendMessageText;
