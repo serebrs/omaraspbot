@@ -1,3 +1,3 @@
 # Telegram чат-бот расписания занятий Омской академии МВД России
 
-@OmaRaspBot
+<https://t.me/OmaRaspBot>
