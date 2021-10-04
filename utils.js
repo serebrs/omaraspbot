@@ -1,15 +1,19 @@
 const { pool, poolLog } = require('./dbpool');
 
-exports.updateLog = function (user_id, user_name, user_lastname = '') {
+exports.updateLog = async function (user_id, user_name, user_lastname = '') {
     let conn;
     const last_datetime = new Date().getTime();
-
-    poolLog.getConnection().then(conn => {
-        conn.query(
-            { namedPlaceholders: true, sql: "INSERT INTO raspbot (user_id, user_name, user_lastname, last_datetime) VALUES (:id, :name, :lastname, :datetime) ON DUPLICATE KEY UPDATE user_name = :name, user_lastname = :lastname, last_datetime = :datetime" },
-            { id: user_id, name: user_name, lastname: user_lastname, datetime: last_datetime }
-        ).catch(err => console.log(err));
-    }).catch(err => console.log(err));
+    try {
+        conn = await pool.getConnection();
+        conn.query( { namedPlaceholders: true, sql: "INSERT INTO raspbot (user_id, user_name, user_lastname, last_datetime) VALUES (:id, :name, :lastname, :datetime) ON DUPLICATE KEY UPDATE user_name = :name, user_lastname = :lastname, last_datetime = :datetime" },
+                    { id: user_id, name: user_name, lastname: user_lastname, datetime: last_datetime });
+    }
+    catch (err) {
+        console.log(err);
+    }
+    finally {
+        if (conn) conn.release();
+    }
 }
 
 exports.searchSchedule = async function searchSchedule(obuchPrep, obuchPrepText, dayShift = 0) {
@@ -56,7 +60,6 @@ exports.searchSchedule = async function searchSchedule(obuchPrep, obuchPrepText,
             break;
         default:
             return 'Ошибка. Удалите и перезапустите бот';
-            break;
     }
     return sendMessageText;
 }
@@ -76,7 +79,7 @@ async function getGroup(groupName, dayShift = 0) {
         console.log(err);
         throw err;
     } finally {
-        if (conn) await conn.end();
+        if (conn) await conn.release();
     }
 }
 
@@ -95,7 +98,7 @@ async function getPrep(prepName, dayShift = 0) {
         console.log(err);
         throw err;
     } finally {
-        if (conn) await conn.end();
+        if (conn) await conn.release();
     }
 }
 
