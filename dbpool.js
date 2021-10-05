@@ -9,9 +9,9 @@ exports.pool = mariadb.createPool({
 });
 
 exports.poolLog = mariadb.createPool({
-    host: process.env.DB2_HOST,
-    user: process.env.DB2_USER,
-    password: process.env.DB2_PWD,
-    database: process.env.DB2_DB,
+    host: process.env.DB_LOG_HOST,
+    user: process.env.DB_LOG_USER,
+    password: process.env.DB_LOG_PWD,
+    database: process.env.DB_LOG_DB,
     acquireTimeout: 1000
 });
