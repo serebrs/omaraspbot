@@ -35,7 +35,7 @@ startScene.action('PREP', async (ctx) => {
             .then((res) => { ctx.session.myData.prevMessage = res.message_id });
     }
     else {
-        await ctx.replyWithHTML(`<b>Отправьте мне текст с Фамилией И.О. преподавателя.</b> Можно отправить часть фамилии, если она уникальная.\n\nОбразец: <i>Иванов И.И.</i> или <i>ивано</i>\n\n⚠️ Если в Вы укажете в профиле Telegram свою фамилию, то поиск станет намного проще!`, backInlineKeyboard)
+        await ctx.replyWithHTML(`<b>Отправьте мне текст с Фамилией И.О. преподавателя.</b> Можно отправить часть фамилии, если она уникальная.\n\nОбразец: <i>Иванов И.И.</i> или <i>ивано</i>\n\n⚠️ Если Вы укажете в профиле Telegram свою фамилию, то поиск станет намного проще!`, backInlineKeyboard)
             .then((res) => { ctx.session.myData.prevMessage = res.message_id });
     }
     ctx.deleteMessage().catch((err) => console.log(err));
